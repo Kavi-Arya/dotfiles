@@ -1,0 +1,32 @@
+AlDente.app
+Alfred 5.app
+Bartender 5.app
+BetterDisplay.app
+Blurred.app
+Capacities.app
+Chromium.app
+Firefox.app
+Goodnotes.app
+Grammarly for Safari.app
+Hidden Bar.app
+Homerow.app
+IBM SPSS Statistics 27
+Karabiner-Elements.app
+Karabiner-EventViewer.app
+KeePassXC.app
+ONLYOFFICE.app
+Obsidian.app
+ProtonVPN.app
+Safari.app
+Skim.app
+TeX
+UnnaturalScrollWheels.app
+Utilities
+Wacom Tablet.localized
+en-croissant.app
+flameshot.app
+iTerm.app
+kitty.app
+neovideVault.app
+qBittorrent.app
+sioyek.app

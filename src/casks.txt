@@ -1,0 +1,17 @@
+alfred
+balenaetcher
+bartender
+betterdisplay
+blurred
+firefox
+flameshot
+keepassxc
+kitty
+obs
+obsidian
+onlyoffice
+protonvpn
+qbittorrent
+sioyek
+skim
+unnaturalscrollwheels

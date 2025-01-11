@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+# Color Palette
+BLACK=0xff654735
+WHITE=0xfff2e5bc
+RED=0xffc14a4a
+GREEN=0xff6c782e
+BLUE=0xff45707a
+YELLOW=0xffc35e0a
+ORANGE=0xffb47109
+MAGENTA=0xff945e80
+GREY=0xff282828
+TRANSPARENT=0x00000000
+
+# General bar colors
+BAR_COLOR=$WHITE
+# BAR_COLOR=$GREY # Grey bar
+ICON_COLOR=$BLACK# Color of all icons
+LABEL_COLOR=$BLACK# Color of all labels
+
+POPUP_BACKGROUND_COLOR=$BAR_COLOR
+POPUP_BORDER_COLOR=$GREEN
+
+SHADOW_COLOR=$BLACK
+
+# Item specific special colors
+GIT_NO_COMMITS=0xffd3d3d3
+SPOTIFY_GREEN=0xff1db954
+VIM=

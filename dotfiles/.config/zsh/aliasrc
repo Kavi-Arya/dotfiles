@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+alias cl="clear && colorscript random" 
+alias neofetch="fastfetch"
+alias cd="z"
+alias cc="z ~/.clones"
+alias cd.="z ~/.config"
+alias gc="git clone --depth 1"
+alias shit="sudo shutdown now"
+alias fucked="sudo systemctl suspend"
+alias live="sudo auto-cpufreq --live"
+alias aud="alsamixer"
+alias remove="sudo pacman -Rns"
+alias ls='eza -al --color=always --group-directories-first' # my preferred listing
+alias la='eza -a --color=always --group-directories-first'  # all files and dirs
+alias ll='eza -l --color=always --group-directories-first'  # long format
+alias lt='eza -aT --color=always --group-directories-first' # tree listing
+alias lsd='eza -alD --color=always --group-directories-first' # Dir listing
+alias sudoedit="sudo nvim"
+alias nv="nvim"
+alias rmf="rm -rf"
+alias srmf="sudo rm -rf"
+alias re="sudo reboot"
+alias Render="kitty +kitten icat"
+alias cdVault="/Users/augest/Library/Mobile\ Documents/com~apple~CloudDocs/Upsc"

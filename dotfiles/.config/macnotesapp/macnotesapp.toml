@@ -1,0 +1,5 @@
+[defaults]
+editor = "$EDITOR"
+format = "plaintext"
+account = "iCloud"
+folder = "Notes"
