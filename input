@@ -1,0 +1,3 @@
+startx /usr/bin/awesome
+startx /usr/bin/bspwm
+startx ~/.local/bin/run.sh

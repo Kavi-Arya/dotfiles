@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StartOS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <div class="toolbar-section">
+        <div class="menu-button">
+          <button
+            class="toolbar-button bold"
+            onclick="toggleMenu('start-menu')"
+          >
+            StartOS
+          </button>
+          <div id="start-menu" class="menu">
+            <ul>
+              <li onclick="handleMenuClick('start-menu', createConfigWindow)">
+                Settings
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-button">
+          <button class="toolbar-button" onclick="toggleMenu('window-menu')">
+            New Window
+          </button>
+          <div id="window-menu" class="menu">
+            <ul>
+              <li
+                onclick="handleMenuClick('window-menu', createAddBookmarksWindow)"
+              >
+                Bookmarks
+              </li>
+              <li onclick="handleMenuClick('window-menu', createAddNoteWindow)">
+                Note
+              </li>
+              <li
+                onclick="handleMenuClick('window-menu', createAddPictureWindow)"
+              >
+                Image
+              </li>
+              <li
+                onclick="handleMenuClick('window-menu', createAddVideoWindow)"
+              >
+                Video
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar-section">
+        <a class="toolbar-button" href="https://github.com/Jaredk3nt/startos">
+          GitHub
+        </a>
+        <p id="toolbar-time" class="toolbar-button"></p>
+      </div>
+    </div>
+
+    <div id="desktop"></div>
+
+    <script>
+      let currentWindow;
+      let windows = {};
+      let config = {};
+      let zIndex = 0;
+      // Constants
+      const LS_WINDOWS_KEY = "startwave-windows";
+      const LS_CONFIG_KEY = "startwave-config";
+      const DEFAULT_LOCATON = { x: 8, y: 32 };
+      const DAYS = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+
+      function genId() {
+        return "window-" + Math.random().toString(16).slice(2);
+      }
+
+      function safeParse(item) {
+        try {
+          return JSON.parse(item);
+        } catch (err) {
+          return undefined;
+        }
+      }
+
+      setDateTime();
+      const s = new Date().getSeconds();
+      setTimeout(() => {
+        setDateTime();
+        setInterval(setDateTime, 1000 * 60);
+      }, (60 - s) * 1000);
+
+      function setDateTime() {
+        const timeEl = document.getElementById("toolbar-time");
+        const d = new Date();
+        const hours = ((d.getHours() + 11) % 12) + 1;
+        timeEl.innerText = `${
+          DAYS[d.getDay()]
+        } ${hours}:${d.getMinutes().toString().padStart(2, "0")}`;
+      }
+    </script>
+    <script src="src/utils/windows.js"></script>
+    <script src="src/windows.js"></script>
+    <script src="src/utils/config.js"></script>
+    <script src="src/utils/dragable.js"></script>
+    <script>
+      loadConfig();
+      loadWindows();
+    </script>
+  </body>
+</html>
