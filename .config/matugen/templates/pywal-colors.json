@@ -3,8 +3,8 @@
     "alpha": "100",
 
     "special": {
-        "background": "{{colors.background.default.hex}}",
-        "foreground": "{{colors.on_background.default.hex}}",
+        "background": "#000000",
+        "foreground": "#ffffff",
         "cursor": "{{colors.surface_bright.default.hex}}"
     },
     "colors": {
