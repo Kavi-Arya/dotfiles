@@ -13,7 +13,22 @@ from modules.power import PowerMenu
 from modules.corners import MyCorner
 import modules.icons as icons
 import modules.data as data
+import subprocess
 
+class nowPlaying(Label):
+    def __init__(self, name="nowPlaying", interval=1):
+        super().__init__(name=name)
+        self.interval = interval
+        self.nowPlayingUpdates()
+
+    def nowPlayingUpdates(self):
+        try:
+            updates = subprocess.check_output(["/home/kvl/.config/fabric/modules/nowPlaying.sh"]).decode().strip()
+            self.set_markup(updates)
+        except Exception as e:
+            self.set_markup(f"Error: {e}")
+        GLib.timeout_add_seconds(self.interval, self.nowPlayingUpdates)
+        
 class Notch(Window):
     def __init__(self, **kwargs):
         super().__init__(
@@ -32,17 +47,26 @@ class Notch(Window):
         self.wallpapers = WallpaperSelector(data.WALLPAPERS_DIR)
         self.notification = NotificationContainer()
         self.power = PowerMenu()
+        self.nowPlaying = nowPlaying(name="nowPlaying")  # Initialize the cpubars widget
+
 
         self.compact = CenterBox(
             name="notch-compact",
-            v_expand=True,
-            h_expand=True,
+            v_expand=False,
+            h_expand=False,
             center_children=[
-                Button(
-                    name="compact-label",
-                    label=f"{data.USERNAME}@{data.HOSTNAME}",
-                    on_clicked=lambda *_: self.open_notch("dashboard"),
-                ),
+                Box(
+                    orientation="horizontal",
+                    hexpand=False,
+                    vexpand=False,
+                    children=[self.nowPlaying],  # Add the label inside a resizable box
+                    )
+
+                # Button(
+                #     name="compact-label",
+                #     label=f"{data.USERNAME}@{data.HOSTNAME}",
+                #     on_clicked=lambda *_: self.open_notch("dashboard"),
+                # ),
             ]
         )
 

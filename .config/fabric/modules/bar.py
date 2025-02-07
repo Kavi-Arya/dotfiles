@@ -6,7 +6,7 @@ from fabric.widgets.button import Button
 from fabric.widgets.wayland import WaylandWindow as Window
 from fabric.hyprland.widgets import Workspaces, WorkspaceButton
 from gi.repository import GLib, Gdk
-from modules.systemtray import SystemTray
+# from modules.systemtray import SystemTray
 from modules.notch import Notch
 import modules.icons as icons
 # from dashboard import Dashboard
@@ -14,48 +14,100 @@ from gi.repository import GLib
 import subprocess
 
 class CpubarsWidget(Label):
-    def __init__(self, name="cpu-bars", interval=1):
+    def __init__(self, name="cpu-bars", interval=1, rust_binary_path="/home/kvl/src/cpubarsRust/cpubars/target/debug/cpubars"):
         super().__init__(name=name)
         self.interval = interval
+        self.rust_binary_path = rust_binary_path
         self.update_bars()
-    
+
     def update_bars(self):
         try:
-            bars = subprocess.check_output(["/home/kvl/.config/fabric/modules/cpubars"]).decode().strip()
+            # Use the Rust binary instead of the previous command
+            bars = subprocess.check_output([self.rust_binary_path]).decode().strip()
             self.set_markup(bars)
         except Exception as e:
             self.set_markup(f"Error: {e}")
+        # Schedule the next update
         GLib.timeout_add_seconds(self.interval, self.update_bars)
 
+# class CpubarsWidget(Label):
+#     def __init__(self, name="cpu-bars", interval=1):
+#         super().__init__(name=name)
+#         self.interval = interval
+#         self.update_bars()
+#
+#     def update_bars(self):
+#         try:
+#             bars = subprocess.check_output(["/home/kvl/.config/fabric/modules/cpubars"]).decode().strip()
+#             self.set_markup(bars)
+#         except Exception as e:
+#             self.set_markup(f"Error: {e}")
+#         GLib.timeout_add_seconds(self.interval, self.update_bars)
+#
+
 class NettrfWidget(Label):
-    def __init__(self, name="nettrf", interval=1):
+    def __init__(self, name="nettrf", interval=1, rust_binary_path="/home/kvl/src/nettrf/src/main"):
         super().__init__(name=name)
         self.interval = interval
+        self.rust_binary_path = rust_binary_path
         self.update_traffic()
 
     def update_traffic(self):
         try:
-            traffic = subprocess.check_output(["/home/kvl/.config/fabric/modules/nettrf"]).decode().strip()
-            self.set_markup(traffic)
+            # Use the Rust binary instead of the previous command
+            bars = subprocess.check_output([self.rust_binary_path]).decode().strip()
+            self.set_markup(bars)
         except Exception as e:
             self.set_markup(f"Error: {e}")
+        # Schedule the next update
         GLib.timeout_add_seconds(self.interval, self.update_traffic)
 
+# class NettrfWidget(Label):
+#     def __init__(self, name="nettrf", interval=1):
+#         super().__init__(name=name)
+#         self.interval = interval
+#         self.update_traffic()
+#
+#     def update_traffic(self):
+#         try:
+#             traffic = subprocess.check_output(["/home/kvl/.config/fabric/modules/nettrf"]).decode().strip()
+#             self.set_markup(traffic)
+#         except Exception as e:
+#             self.set_markup(f"Error: {e}")
+#         GLib.timeout_add_seconds(self.interval, self.update_traffic)
+
 class ArchUpdatesWidget(Label):
-    def __init__(self, name="arch-updates", interval=3600):
+    def __init__(self, name="arch-updates", interval=60, rust_binary_path="/home/kvl/src/archupdates/target/debug/archupdates"):
         super().__init__(name=name)
         self.interval = interval
+        self.rust_binary_path = rust_binary_path
         self.update_updates()
 
     def update_updates(self):
         try:
-            updates = subprocess.check_output(["/home/kvl/.config/fabric/modules/arch_updates"]).decode().strip()
+            # Use the Rust binary instead of the previous command
+            bars = subprocess.check_output([self.rust_binary_path]).decode().strip()
+            self.set_markup(bars)
+        except Exception as e:
+            self.set_markup(f"Error: {e}")
+        # Schedule the next update
+        GLib.timeout_add_seconds(self.interval, self.update_updates)
+
+class ModeTell(Label):
+    def __init__(self, name="mode", interval=0.1):
+        super().__init__(name=name)
+        self.interval = interval
+        self.modeUpdates()
+
+    def modeUpdates(self):
+        try:
+            updates = subprocess.check_output(["/home/kvl/.config/fabric/modules/showMode.sh"]).decode().strip()
             self.set_markup(updates)
         except Exception as e:
             self.set_markup(f"Error: {e}")
-        GLib.timeout_add_seconds(self.interval, self.update_updates)
+        GLib.timeout_add_seconds(self.interval, self.modeUpdates)
 
-class cpuTemp(Label):
+class CpuTemp(Label):
     def __init__(self, name="cpu_temp", interval=1):
         super().__init__(name=name)
         self.interval = interval
@@ -106,15 +158,14 @@ class Bar(Window):
             buttons=[WorkspaceButton(id=i, label="") for i in range(1, 11)],
         )
 
-        self.systray = SystemTray()  # Revert to original SystemTray
+        # self.systray = SystemTray()  # Revert to original SystemTray
 
         self.date_time = DateTime(name="date-time", formatters=["%d %b %y (%a) %r"], h_align="center", v_align="center")
-
-        self.cpu_temp = cpuTemp(name="cpu_temp")  # Initialize the cpubars widget
-        # self.date_time = cpuTemp(name="date_time")  # Initialize the cpubars widget
-        self.cpubars = CpubarsWidget(name="cpu-bars")  # Initialize the cpubars widget
-        self.nettrf = NettrfWidget(name="nettrf")  # Initialize the nettrf widget
-        self.arch_updates = ArchUpdatesWidget(name="arch-updates")  # Initialize the arch updates widget
+        self.cpu_temp = CpuTemp(name="cpu_temp")
+        self.cpubars = CpubarsWidget(name="cpu-bars")
+        self.nettrf = NettrfWidget(name="nettrf")
+        self.arch_updates = ArchUpdatesWidget(name="arch-updates")
+        self.modeTell = ModeTell(name="mode")
 
         self.button_apps = Button(
             name="button-bar",
@@ -150,6 +201,7 @@ class Bar(Window):
                 children=[
                     self.button_apps,
                     Box(name="workspaces-container", children=[self.workspaces]),
+                    self.arch_updates,
                     self.nettrf,  # Move nettrf next to workspaces
                 ]
             ),
@@ -158,9 +210,9 @@ class Bar(Window):
                 spacing=4,
                 orientation="h",
                 children=[
+                    self.modeTell,
                     self.cpubars,  # Add the cpubars widget here
                     self.cpu_temp,
-                    # self.arch_updates,  # Move nettrf next to workspaces
                     # self.systray,
                     self.date_time,
                     self.button_power,

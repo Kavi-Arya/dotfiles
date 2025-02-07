@@ -1,0 +1,125 @@
+@use 'colors.scss';
+// Updated #workspaces theme with animations
+#workspaces {
+    padding: 14px;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+    box-shadow: none;
+    border: none;
+}
+
+@keyframes new-button {
+    from {
+        opacity: 0;
+        min-width: 0px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes active-button {
+    0% {
+        background: radial-gradient(ellipse farthest-corner at 12px -24px,
+            $red,
+            $peach,
+            $yellow,
+            $green,
+            $blue,
+            $mauve
+        );
+    }
+    100% {
+        background: radial-gradient(ellipse farthest-corner at 12px -24px,
+            $mauve,
+            $red,
+            $peach,
+            $yellow,
+            $green,
+            $blue
+        );
+    }
+}
+
+@keyframes rainbow {
+    0% {
+        color: $red;
+        text-shadow: 0 0 8px $red, 0 0 4px $crust;
+    }
+    100% {
+        color: $magenta;
+        text-shadow: 0 0 8px $magenta, 0 0 4px $crust;
+    }
+}
+
+#workspaces-container {
+    background-color: $shadow;
+    margin-top: 4px;
+}
+
+#workspaces > button {
+    min-width: 31px;
+    min-height: 8px;
+    border-radius: 50%;
+    transition: all 0.25s cubic-bezier(.5, .25, 0, 1);
+    background-color: $foreground;
+    font-weight: 600;
+    font-size: 22px;
+    color: $magenta;
+    border: 1px solid $surface0;
+    box-shadow: 0 0 0px 1px rgba(5, 5, 15, 1);
+    animation-name: new-button;
+    animation-duration: 0.22s;
+
+    &:hover {
+        background: $surface1;
+        border-color: $surface2;
+        text-shadow: none;
+        border-radius: 9px;
+        transition: all 0.07s;
+    }
+
+    &.active {
+        min-width: 45px;
+        color: $bg;
+        font-weight: 700;
+        background: radial-gradient(ellipse farthest-corner at 12px -24px,
+            $red,
+            $peach,
+            $yellow,
+            $green,
+            $blue,
+            $mauve
+        );
+        border: none;
+        box-shadow: 0 0 0px 1px rgba(5, 5, 15, 0.15);
+        border-radius: 9px;
+        animation-name: active-button;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+
+    &.urgent {
+        background-color: $error_dim;
+        color: $red;
+    }
+
+    &.hidden {
+        color: $red;
+    }
+
+    &.empty {
+        background-color: rgba($foreground, 0.25);
+
+        &:hover {
+            background-color: $foreground;
+        }
+    }
+}
+
