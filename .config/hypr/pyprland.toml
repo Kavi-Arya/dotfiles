@@ -8,6 +8,7 @@ plugins = [
  "shift_monitors",
  "toggle_special",
  "workspaces_follow_focus",
+ "change_workspace",
 ]
 
 # using variables for demonstration purposes (not needed)

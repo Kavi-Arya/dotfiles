@@ -1,5 +1,5 @@
 ---@type ChadrcConfig
-local M = {}
+local M = {} ---@class M
 
 function M.check_environment()
   local xorg_running = io.popen("pgrep -x dwm"):read("*a")
