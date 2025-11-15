@@ -2,7 +2,7 @@
 
 CONFIG_DIR="$HOME/.config/eww-which-key"
 
-togleBase=false
+toggleBase=false
 
 print_help() {
   cat <<EOF
@@ -61,7 +61,7 @@ openWidget() {
   commandGroupSorted=$(echo "$commandGroup" | jq -c ' sort_by(.key) ')
   merged=$(echo "$commandGroupSorted$submapGroupSorted" | jq -s 'reduce .[] as $x ([]; . + $x)')
   grouped=$(echo "$merged" | jq -c '[ _nwise('$columns') ]')
-  # echo "$grouped"
+  echo "$grouped"
   eww --config "$CONFIG_DIR" open which-key --arg bindsJson="$grouped"
 }
 
